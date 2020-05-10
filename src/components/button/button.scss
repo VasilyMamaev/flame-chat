@@ -1,0 +1,7 @@
+.button {
+  text-transform: uppercase;
+  &--large {
+    height: 56px;
+    width: 100%;
+  }
+}
