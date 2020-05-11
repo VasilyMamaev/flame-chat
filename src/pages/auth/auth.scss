@@ -31,4 +31,18 @@
 
     color: #adadad;
   }
+
+  &__success-block {
+    text-align: center;
+    height: 400px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    h3 {
+      margin-top: 20px;
+    }
+  }
 }
