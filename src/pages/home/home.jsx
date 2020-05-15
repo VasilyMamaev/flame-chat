@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 import "./home.scss";
 import Message from "../../components/message/message.tsx";

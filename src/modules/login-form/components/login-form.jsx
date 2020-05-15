@@ -5,11 +5,17 @@ import { Link } from "react-router-dom";
 
 import Button from "../../../components/button/button";
 import BaseBlock from "../../../components/base-block/base-block";
+import validateField from "../../../utils/validate-field";
 
-const LoginForm = () => {
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
-  };
+const LoginForm = (props) => {
+  const {
+    values,
+    touched,
+    errors,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+  } = props;
 
   return (
     <div>
@@ -18,31 +24,42 @@ const LoginForm = () => {
         <p>Пожалуйста войдите в свой аккаунт</p>
       </div>
       <BaseBlock>
-        <Form
-          name="normal_login"
-          className="login-form"
-          initialValues={{ remember: true }}
-          onFinish={onFinish}
-        >
+        <Form className="login-form" onFinish={handleSubmit}>
           <Form.Item
-            name="username"
-            rules={[{ required: true, message: "Пожалуйста введите логин" }]}
+            name="email"
+            hasFeedback
+            rules={[{ required: true, message: "Пожалуйста введите email" }]}
+            validateStatus={validateField("email", touched, errors)}
+            help={!touched.email ? null : errors.email}
           >
             <Input
+              id="email"
               prefix={<UserOutlined className="site-form-item-icon" />}
               size="large"
-              placeholder="Логин"
+              placeholder="E-mail"
+              value={values.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
             />
           </Form.Item>
           <Form.Item
+            hasFeedback
             name="password"
+            validateStatus={
+              touched.password && values.password === "" ? "error" : ""
+            }
             rules={[{ required: true, message: "Пожалуйста введите пароль" }]}
+            help={!touched.password ? null : errors.password}
           >
             <Input
+              id="password"
               prefix={<LockOutlined className="site-form-item-icon" />}
               size="large"
               type="password"
-              placeholder="Пароль"
+              placeholder="пароль"
+              value={values.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
             />
           </Form.Item>
           <Form.Item>

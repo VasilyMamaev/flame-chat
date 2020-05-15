@@ -10,13 +10,19 @@ import { Link } from "react-router-dom";
 
 import BaseBlock from "../../../components/base-block/base-block";
 import Button from "../../../components/button/button";
+import validateField from "../../../utils/validate-field";
 
-function RegisterForm() {
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
-  };
+function RegisterForm(props) {
+  const {
+    values,
+    touched,
+    errors,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+  } = props;
 
-  const success = true;
+  const success = false;
 
   return (
     <div>
@@ -26,24 +32,27 @@ function RegisterForm() {
       </div>
       <BaseBlock>
         {!success ? (
-          <Form
-            name="normal_login"
-            className="login-form"
-            initialValues={{ remember: true }}
-            onFinish={onFinish}
-          >
+          <Form className="register-form" onFinish={handleSubmit}>
             <Form.Item
-              name="E-mail"
-              rules={[{ required: true, message: "Пожалуйста введите E-mail" }]}
+              name="email"
+              hasFeedback
+              rules={[{ required: true, message: "Пожалуйста введите email" }]}
+              validateStatus={validateField("email", touched, errors)}
+              help={!touched.email ? null : errors.email}
             >
               <Input
+                id="email"
                 prefix={<MailOutlined className="site-form-item-icon" />}
                 size="large"
                 placeholder="E-mail"
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
               />
             </Form.Item>
             <Form.Item
               name="name"
+              hasFeedback
               rules={[{ required: true, message: "Пожалуйста введите имя" }]}
             >
               <Input
@@ -53,18 +62,26 @@ function RegisterForm() {
               />
             </Form.Item>
             <Form.Item
+              hasFeedback
               name="password"
+              validateStatus={validateField("password", touched, errors)}
               rules={[{ required: true, message: "Пожалуйста введите пароль" }]}
+              help={!touched.password ? null : errors.password}
             >
               <Input
+                id="password"
                 prefix={<LockOutlined className="site-form-item-icon" />}
                 size="large"
                 type="password"
                 placeholder="пароль"
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
               />
             </Form.Item>
             <Form.Item
               name="repeat-password"
+              hasFeedback
               rules={[
                 { required: true, message: "Пожалуйста повторите пароль" },
               ]}
