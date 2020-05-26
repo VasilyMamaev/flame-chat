@@ -83,4 +83,72 @@
   .message__avatar {
     margin-left: 13px;
   }
+  &.message--is-typing {
+    .content__typing-indicator {
+      span {
+        background-color: #9e9ea1;
+      }
+    }
+  }
+}
+
+.message--is-typing {
+  .message__content {
+    background-color: #e5edff;
+  }
+  .img-status {
+    display: none;
+  }
+  .content__typing-indicator {
+    will-change: transform;
+    display: table;
+    margin: 0 auto;
+    position: relative;
+    animation: 2s bulge infinite ease-out;
+    span {
+      height: 8px;
+      width: 8px;
+      float: left;
+      margin: 0 3px;
+      background-color: #9e9ea1;
+      display: block;
+      border-radius: 50%;
+      opacity: 0.4;
+      @for $i from 1 through 3 {
+        &:nth-of-type(#{$i}) {
+          animation: 1s blink infinite ($i * 0.3333s);
+        }
+      }
+    }
+  }
+  @keyframes blink {
+    50% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes bulge {
+    50% {
+      transform: scale(1.05);
+    }
+  }
+}
+
+.message--image {
+  .message__content {
+    padding: 0;
+  }
+  .content__attachments {
+    padding: 0;
+  }
+  &.message--outcome {
+    .attachment img {
+      border-radius: 12px 12px 0px 12px;
+    }
+  }
+  .attachment img {
+    height: 150px;
+    width: 150px;
+    border-radius: 12px 12px 12px 0px;
+  }
 }
